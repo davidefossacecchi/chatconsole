@@ -1,5 +1,7 @@
 package server;
 
+import gui.ChatGUI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,6 +20,7 @@ public class Server {
 			BufferedReader input = new BufferedReader(new InputStreamReader(acceptSocket.getInputStream()));
 			ReceiveThread inbox = new ReceiveThread(acceptSocket, input);
 			SendThread dispatch = new SendThread(acceptSocket, output);
+			ChatGUI gui = new ChatGUI();
 			
 			inbox.start();
 			dispatch.start();
