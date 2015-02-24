@@ -25,11 +25,13 @@ public class ChatGUI extends JFrame implements ActionListener, InboxListener{
 	private JTextArea conversation;
 	private ReceiveThread inbox;
 	private SendThread outbox;
+	private String user; 
 	
 	public ChatGUI(String user, ReceiveThread inbox, SendThread outbox){
 		super(user + " - ChatConsole");
 		this.inbox = inbox;
 		this.outbox = outbox;
+		this.user = user;
 		this.inbox.addInboxListener(this);
 		try{
 			UIManager.setLookAndFeel(
@@ -70,12 +72,13 @@ public class ChatGUI extends JFrame implements ActionListener, InboxListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		
+		outbox.sendMessage(user + ": "+ msg.getText());
+		conversation.append(user + ": " + msg .getText()+"\n");
+		this.msg.setText("");
 	}
 	
 	public void messageReceived(String msg){
 		conversation.append(msg+"\n");
-		this.msg.setText("");
 	}
 
 }

@@ -1,5 +1,7 @@
 package client;
 
+import gui.ChatGUI;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,6 +18,7 @@ public class Client {
 			
 			ReceiveThread inbox = new ReceiveThread(clientSocket, input);
 			SendThread dispatch = new SendThread(clientSocket, output);
+			ChatGUI gui = new ChatGUI("Client", inbox, dispatch);
 			
 			inbox.start();
 			dispatch.start();

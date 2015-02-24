@@ -4,9 +4,6 @@ import java.io.BufferedReader;
 import java.net.Socket;
 import java.util.HashSet;
 
-
-import javax.swing.event.EventListenerList;
-
 public class ReceiveThread extends Thread {
 	private Socket connectionSocket;
 	private BufferedReader msgReader;

@@ -2,27 +2,30 @@ package chatthreads;
 
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.LinkedList;
 
 public class SendThread extends Thread {
 	
 	private Socket connectionSocket;
 	private PrintStream sendStream;
-	private Scanner scan;
 	private String msg = "";
+	private LinkedList<String> msgs;
 	
 	public SendThread(Socket connection, PrintStream output){
 		super();
 		this.connectionSocket = connection;
 		this.sendStream = output;
-		this.scan = new Scanner(System.in); 
+		this.msgs = new LinkedList<String>();
 	}
 	
 	public void run(){
 		while (connectionSocket.isConnected()){
-			msg = scan.nextLine();
-			sendStream.println(msg);
+			if(msgs.size() > 0) sendStream.println(msgs.poll());
 		}
+	}
+	
+	public void sendMessage(String msg){
+		msgs.add(msg);
 	}
 
 }
