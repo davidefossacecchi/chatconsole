@@ -20,7 +20,7 @@ public class Server {
 			BufferedReader input = new BufferedReader(new InputStreamReader(acceptSocket.getInputStream()));
 			ReceiveThread inbox = new ReceiveThread(acceptSocket, input);
 			SendThread dispatch = new SendThread(acceptSocket, output);
-			ChatGUI gui = new ChatGUI();
+			ChatGUI gui = new ChatGUI("Server", inbox, dispatch);
 			
 			inbox.start();
 			dispatch.start();

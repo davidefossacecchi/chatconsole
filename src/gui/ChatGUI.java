@@ -14,14 +14,23 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-public class ChatGUI extends JFrame implements ActionListener{
+import chatthreads.InboxListener;
+import chatthreads.ReceiveThread;
+import chatthreads.SendThread;
+
+public class ChatGUI extends JFrame implements ActionListener, InboxListener{
 	
 	private Container content;
 	private JTextField msg;
 	private JTextArea conversation;
+	private ReceiveThread inbox;
+	private SendThread outbox;
 	
-	public ChatGUI(){
-		super("ChatConsole");
+	public ChatGUI(String user, ReceiveThread inbox, SendThread outbox){
+		super(user + " - ChatConsole");
+		this.inbox = inbox;
+		this.outbox = outbox;
+		this.inbox.addInboxListener(this);
 		try{
 			UIManager.setLookAndFeel(
 	            UIManager.getSystemLookAndFeelClassName());
@@ -61,8 +70,12 @@ public class ChatGUI extends JFrame implements ActionListener{
 	}
 	
 	public void actionPerformed(ActionEvent e){
-		conversation.append(msg.getText()+"\n");
-		msg.setText("");
+		
+	}
+	
+	public void messageReceived(String msg){
+		conversation.append(msg+"\n");
+		this.msg.setText("");
 	}
 
 }
